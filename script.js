@@ -1,6 +1,6 @@
 function buyNow() {
   var options = {
-    key: "rzp_test_XXXXXXXXXX", // test key
+    key: "rzp_test_S0XIpEgyHXKHef", // test key
     amount: 9900,
     currency: "INR",
     name: "Prashant Resume Store",
