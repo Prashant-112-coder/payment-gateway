@@ -9,7 +9,7 @@ async function buyNow() {
 
     // 2️⃣ Razorpay checkout options
     var options = {
-      key: "rzp_test_S0XIpEgyHXKHef", // 🔁 REPLACE with your Razorpay TEST KEY ID
+      key: "rzp_test_S0eeQglGbygi4C", // 🔁 REPLACE with your Razorpay TEST KEY ID
       amount: order.amount,
       currency: order.currency,
       name: "Prashant Resume Store",
