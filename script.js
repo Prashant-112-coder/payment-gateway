@@ -1,15 +1,14 @@
 async function buyNow() {
   try {
-    // 1️⃣ Call backend to create order
+    // 1️⃣ Create order
     const response = await fetch("https://razorpay-backend-ke6v.onrender.com/create-order", {
       method: "POST"
     });
-
     const order = await response.json();
 
-    // 2️⃣ Razorpay checkout options
+    // 2️⃣ Razorpay checkout
     var options = {
-      key: "rzp_test_S0XIpEgyHXKHef", // 🔁 put your Razorpay TEST KEY here
+      key: "rzp_test_XXXXXXXXXX", // your test key
       amount: order.amount,
       currency: order.currency,
       name: "Prashant Resume Store",
@@ -17,7 +16,6 @@ async function buyNow() {
       order_id: order.id,
 
       handler: async function (response) {
-        // 3️⃣ Verify payment on backend
         const verifyRes = await fetch("https://razorpay-backend-ke6v.onrender.com/verify-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -27,7 +25,7 @@ async function buyNow() {
         const result = await verifyRes.json();
 
         if (result.success) {
-          alert("Payment verified successfully! You can now download your resume.");
+          alert("Payment verified successfully!");
         } else {
           alert("Payment verification failed!");
         }
@@ -38,6 +36,6 @@ async function buyNow() {
     rzp.open();
   } catch (error) {
     console.error("Error:", error);
-    alert("Something went wrong. Please try again.");
+    alert("Something went wrong.");
   }
 }
