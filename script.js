@@ -27,10 +27,11 @@ async function buyNow() {
         const result = await verifyRes.json();
 
         if (result.success) {
-          alert("Payment verified successfully! You can now download your resume.");
-        } else {
-          alert("Payment verification failed!");
-        }
+  alert("Payment verified successfully!");
+} else {
+  alert("Payment verification failed!");
+}
+
       }
     };
 
