@@ -1,6 +1,4 @@
-function buyNow() {
-  alert("Payment gateway will open here");
-}
+
 function buyNow() {
   var options = {
     key: "rzp_test_XXXXXXXXXX", // 🟡 your Razorpay TEST key here
