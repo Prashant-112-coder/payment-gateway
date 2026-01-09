@@ -2,7 +2,14 @@ async function buyNow() {
   try {
     // 1️⃣ Create order from backend
     const response = await fetch("https://razorpay-backend-ke6v.onrender.com/create-order", {
-      method: "POST"
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        amount: 19900, // Amount in paise (₹199 = 19900)
+        currency: "INR"
+      })
     });
 
     if (!response.ok) {
@@ -13,7 +20,7 @@ async function buyNow() {
 
     // 2️⃣ Razorpay checkout options
     var options = {
-      key: "rzp_test_S0eeQglGbygi4C", // ✅ ONLY Key ID here (not secret)
+      key: "rzp_test_S0eeQglGbygi4C", // ONLY Key ID
       amount: order.amount,
       currency: order.currency,
       name: "Prashant Resume Store",
@@ -26,20 +33,40 @@ async function buyNow() {
           const verifyRes = await fetch("https://razorpay-backend-ke6v.onrender.com/verify-payment", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(response)
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            })
           });
 
           const result = await verifyRes.json();
 
           if (result.success) {
-            alert("Payment verified successfully!");
+            alert("✅ Payment verified successfully!");
           } else {
-            alert("Payment verification failed!");
+            alert("❌ Payment verification failed!");
           }
         } catch (err) {
           console.error("Verification Error:", err);
           alert("Verification error occurred");
         }
+      },
+
+      modal: {
+        ondismiss: function () {
+          alert("Payment cancelled");
+        }
+      },
+
+      prefill: {
+        name: "Prashant",
+        email: "test@example.com",
+        contact: "9999999999"
+      },
+
+      theme: {
+        color: "#3399cc"
       }
     };
 
