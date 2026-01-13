@@ -187,6 +187,82 @@
         font-size: 16px;
       }
     }
+
+    /* ============================= */
+    /* PAYMENT SUCCESS MODAL */
+    /* ============================= */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 14px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      animation: scaleIn 0.3s ease;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .modal-content h2 {
+      color: #2b7cff;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .receipt {
+      text-align: left;
+      background: #f5f9ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .receipt p {
+      margin: 6px 0;
+      color: #333;
+    }
+
+    .modal-content button {
+      background: #2b7cff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .modal-content button:hover {
+      background: #1f5fd6;
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
@@ -268,6 +344,25 @@
   <footer>
     © 2026 ResumePro | All Rights Reserved
   </footer>
+
+  <!-- ============================= -->
+  <!-- PAYMENT SUCCESS POPUP -->
+  <!-- ============================= -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <h2>✅ Payment Successful</h2>
+      <p class="subtitle">Thank you for your purchase</p>
+
+      <div class="receipt">
+        <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+        <p><strong>Payment ID:</strong> <span id="paymentId"></span></p>
+        <p><strong>Amount:</strong> ₹<span id="amount"></span></p>
+        <p><strong>Date:</strong> <span id="date"></span></p>
+      </div>
+
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
 
   <!-- Razorpay Checkout Script -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
