@@ -1,60 +1,278 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Resume Templates</title>
+  <meta charset="UTF-8" />
+  <title>Professional Resume Templates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #f5f9ff, #ffffff);
+      color: #222;
+    }
+
+    /* Header */
+    header {
+      background: #ffffff;
+      padding: 20px 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h2 {
+      color: #2b7cff;
+      font-weight: 700;
+    }
+
+    header nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    header nav a:hover {
+      color: #2b7cff;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 20px 40px;
       text-align: center;
-      background: #f4f4f4;
-      padding: 50px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+      color: #111;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    /* Cards Section */
+    .templates {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 20px 80px;
     }
 
     .card {
-      background: #fff;
-      width: 300px;
-      margin: auto;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #e8f1ff;
+      color: #2b7cff;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .preview {
+      height: 180px;
+      background: linear-gradient(135deg, #f0f4ff, #e6eeff);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2b7cff;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .card h3 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: #111;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 15px;
+      line-height: 1.5;
     }
 
     .price {
       font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #2b7cff;
+    }
+
+    .features {
+      list-style: none;
+      margin-bottom: 20px;
+    }
+
+    .features li {
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #444;
+    }
+
+    .features li::before {
+      content: "✔";
+      color: #2b7cff;
+      margin-right: 8px;
       font-weight: bold;
-      margin: 10px 0;
     }
 
-    button {
-      padding: 10px 20px;
-      border: none;
+    .btn {
+      width: 100%;
+      padding: 12px;
       background: #2b7cff;
-      color: #fff;
-      border-radius: 5px;
+      border: none;
+      color: #ffffff;
+      font-size: 15px;
+      border-radius: 8px;
       cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s ease;
     }
 
-    button:hover {
+    .btn:hover {
       background: #1f5fd6;
+    }
+
+    /* Footer */
+    footer {
+      background: #f3f6fb;
+      padding: 20px;
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Professional Resume Templates</h1>
+  <!-- Header -->
+  <header>
+    <h2>ResumePro</h2>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Templates</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
 
-  <div class="card">
-    <h2>Modern Resume</h2>
-    <p>ATS-friendly resume template (PDF + DOCX)</p>
-    <p class="price">₹99</p>
-    <button onclick="buyNow()">Buy Now</button>
-  </div>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Create a Job-Winning Resume in Minutes</h1>
+    <p>Professional, ATS-friendly resume templates trusted by thousands of job seekers.</p>
+  </section>
 
-  <!-- Razorpay Checkout Script (MUST be before your JS) -->
+  <!-- Templates -->
+  <section class="templates">
+
+    <!-- Card 1 -->
+    <div class="card">
+      <span class="badge">BEST SELLER</span>
+      <div class="preview">Modern Resume Preview</div>
+      <h3>Modern Resume</h3>
+      <p>Clean, professional design perfect for corporate and tech roles.</p>
+
+      <ul class="features">
+        <li>ATS-Friendly Format</li>
+        <li>PDF + DOCX Included</li>
+        <li>Easy Customization</li>
+      </ul>
+
+      <div class="price">₹99</div>
+      <button class="btn" onclick="buyNow()">Buy Now</button>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card">
+      <span class="badge">NEW</span>
+      <div class="preview">Creative Resume Preview</div>
+      <h3>Creative Resume</h3>
+      <p>Eye-catching design for designers, marketers, and freshers.</p>
+
+      <ul class="features">
+        <li>Stylish Layout</li>
+        <li>Editable in Word</li>
+        <li>High-Quality Print</li>
+      </ul>
+
+      <div class="price">₹149</div>
+      <button class="btn" onclick="buyNow()">Buy Now</button>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card">
+      <span class="badge">PRO</span>
+      <div class="preview">Executive Resume Preview</div>
+      <h3>Executive Resume</h3>
+      <p>Premium layout for senior professionals and management roles.</p>
+
+      <ul class="features">
+        <li>Minimal & Elegant</li>
+        <li>Recruiter-Approved</li>
+        <li>Instant Download</li>
+      </ul>
+
+      <div class="price">₹199</div>
+      <button class="btn" onclick="buyNow()">Buy Now</button>
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2026 ResumePro | All Rights Reserved
+  </footer>
+
+  <!-- Razorpay Checkout Script -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-  <!-- Your JavaScript -->
+  <!-- Your JS -->
   <script src="script.js"></script>
 
 </body>
