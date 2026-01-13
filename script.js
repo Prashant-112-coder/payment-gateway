@@ -1,49 +1,51 @@
 async function buyNow() {
   try {
-    const response = await fetch("https://razorpay-backend-ke6v.onrender.com/create-order", {
+    // 1️⃣ Create order
+    const response = await fetch("http://localhost:10000/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount: 19900,
+        amount: 9900,   // ₹99 in paise
         currency: "INR"
       })
     });
 
-    if (!response.ok) throw new Error("Order creation failed");
+    const data = await response.json();
+    console.log("Order Response:", data);
 
-    const order = await response.json();
+    if (!data.success) {
+      alert("❌ Order creation failed");
+      return;
+    }
 
+    const order = data.order;
+
+    // 2️⃣ Razorpay checkout
     var options = {
-      key: "rzp_test_S0eeQglGbygi4C",
+      key: "rzp_test_S0eeQglGbygi4C", // ONLY Key ID (not secret)
       amount: order.amount,
       currency: order.currency,
-      name: "Prashant Resume Store",
-      description: "Modern Resume Template",
+      name: "ResumePro",
+      description: "Resume Template",
       order_id: order.id,
 
       handler: async function (response) {
-        const verifyRes = await fetch("https://razorpay-backend-ke6v.onrender.com/verify-payment", {
+        console.log("Razorpay Response:", response);
+
+        // 3️⃣ Verify payment
+        const verifyRes = await fetch("http://localhost:10000/verify-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature
-          })
+          body: JSON.stringify(response)
         });
 
         const result = await verifyRes.json();
+        console.log("Verify Response:", result);
 
         if (result.success) {
-          alert("✅ Payment verified successfully!");
+          alert("✅ Payment Successful!");
         } else {
-          alert("❌ Payment verification failed!");
-        }
-      },
-
-      modal: {
-        ondismiss: function () {
-          alert("Payment cancelled");
+          alert("❌ Payment Verification Failed");
         }
       },
 
@@ -53,14 +55,16 @@ async function buyNow() {
         contact: "9999999999"
       },
 
-      theme: { color: "#3399cc" }
+      theme: {
+        color: "#2b7cff"
+      }
     };
 
     var rzp = new Razorpay(options);
     rzp.open();
 
   } catch (error) {
-    console.error("Error:", error);
-    alert("Something went wrong. Please try again.");
+    console.error("Buy Now Error:", error);
+    alert("Something went wrong. Check console.");
   }
 }
