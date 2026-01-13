@@ -25,7 +25,7 @@ async function buyNow() {
       key: "rzp_test_S0eeQglGbygi4C", // ONLY Key ID (not secret)
       amount: order.amount,
       currency: order.currency,
-      name: "ResumePro",
+      name: "Prashant",
       description: "Resume Template",
       order_id: order.id,
 
