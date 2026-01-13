@@ -1,7 +1,7 @@
 async function buyNow() {
   try {
     // 1️⃣ Create order
-    const response = await fetch("http://localhost:10000/create-order", {
+    const response = await fetch("https://razorpay-backend-ke6v.onrender.com/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -33,7 +33,7 @@ async function buyNow() {
         console.log("Razorpay Response:", response);
 
         // 3️⃣ Verify payment
-        const verifyRes = await fetch("http://localhost:10000/verify-payment", {
+        const verifyRes = await fetch("https://razorpay-backend-ke6v.onrender.com/verify-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(response)
