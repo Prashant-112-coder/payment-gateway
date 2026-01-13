@@ -1,10 +1,13 @@
 async function buyNow() {
   try {
-    const response = await fetch("https://razorpay-backend-ke6v.onrender.com/create-order", {
+    console.log("Creating order...");
+
+    // 1️⃣ Create order (LOCAL BACKEND)
+    const response = await fetch("http://localhost:10000/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount: 9900,
+        amount: 9900,   // ₹99 in paise
         currency: "INR"
       })
     });
@@ -12,22 +15,17 @@ async function buyNow() {
     const data = await response.json();
     console.log("Order Response:", data);
 
-    // ✅ Handle BOTH backend formats
-    let order;
-    if (data.id) {
-      // Format: order object directly
-      order = data;
-    } else if (data.success && data.order) {
-      // Format: { success: true, order: {...} }
-      order = data.order;
-    } else {
+    // ✅ Old style check (order object directly)
+    if (!data || !data.id) {
       alert("❌ Order creation failed");
       return;
     }
 
+    const order = data;
+
     // 2️⃣ Razorpay checkout
     var options = {
-      key: "rzp_test_S0eeQglGbygi4C",
+      key: "rzp_test_S0eeQglGbygi4C", // ONLY Key ID
       amount: order.amount,
       currency: order.currency,
       name: "Prashant",
@@ -37,7 +35,8 @@ async function buyNow() {
       handler: async function (response) {
         console.log("Razorpay Response:", response);
 
-        const verifyRes = await fetch("https://razorpay-backend-ke6v.onrender.com/verify-payment", {
+        // 3️⃣ Verify payment (LOCAL BACKEND)
+        const verifyRes = await fetch("http://localhost:10000/verify-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(response)
@@ -47,17 +46,21 @@ async function buyNow() {
         console.log("Verify Response:", result);
 
         if (result.success) {
-          showSuccessPopup(
-            response.razorpay_order_id,
-            response.razorpay_payment_id,
-            options.amount
-          );
+          alert("✅ Payment Successful!");
         } else {
           alert("❌ Payment Verification Failed");
         }
       },
 
-      theme: { color: "#2b7cff" }
+      prefill: {
+        name: "Prashant",
+        email: "test@example.com",
+        contact: "9999999999"
+      },
+
+      theme: {
+        color: "#2b7cff"
+      }
     };
 
     var rzp = new Razorpay(options);
