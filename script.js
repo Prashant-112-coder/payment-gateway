@@ -13,14 +13,13 @@ async function buyNow() {
     const data = await response.json();
     console.log("Order Response:", data);
 
+    // ✅ FIX: Check if order id exists
     if (!data || !data.id) {
-  alert("❌ Order creation failed");
-  return;
-}
+      alert("❌ Order creation failed");
+      return;
+    }
 
-const order = data;
-
-  
+    const order = data;
 
     // 2️⃣ Razorpay checkout
     var options = {
@@ -45,7 +44,6 @@ const order = data;
         console.log("Verify Response:", result);
 
         if (result.success) {
-          // ✅ SHOW PAYMENT RECEIPT POPUP
           showSuccessPopup(
             response.razorpay_order_id,
             response.razorpay_payment_id,
@@ -74,21 +72,4 @@ const order = data;
     console.error("Buy Now Error:", error);
     alert("Something went wrong. Check console.");
   }
-}
-
-/* ============================= */
-/* PAYMENT POPUP FUNCTIONS      */
-/* ============================= */
-
-function showSuccessPopup(orderId, paymentId, amount) {
-  document.getElementById("orderId").innerText = orderId;
-  document.getElementById("paymentId").innerText = paymentId;
-  document.getElementById("amount").innerText = (amount / 100);
-  document.getElementById("date").innerText = new Date().toLocaleString();
-
-  document.getElementById("successModal").style.display = "flex";
-}
-
-function closeModal() {
-  document.getElementById("successModal").style.display = "none";
 }
