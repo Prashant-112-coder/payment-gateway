@@ -13,12 +13,14 @@ async function buyNow() {
     const data = await response.json();
     console.log("Order Response:", data);
 
-    if (!data.success) {
-      alert("❌ Order creation failed");
-      return;
-    }
+    if (!data || !data.id) {
+  alert("❌ Order creation failed");
+  return;
+}
 
-    const order = data.order;
+const order = data;
+
+  
 
     // 2️⃣ Razorpay checkout
     var options = {
