@@ -1,11 +1,10 @@
 async function buyNow() {
   try {
-    // 1️⃣ Create order
     const response = await fetch("https://razorpay-backend-ke6v.onrender.com/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount: 9900,   // ₹99 in paise
+        amount: 9900,
         currency: "INR"
       })
     });
@@ -13,17 +12,22 @@ async function buyNow() {
     const data = await response.json();
     console.log("Order Response:", data);
 
-    // ✅ FIX: Check if order id exists
-    if (!data || !data.id) {
+    // ✅ Handle BOTH backend formats
+    let order;
+    if (data.id) {
+      // Format: order object directly
+      order = data;
+    } else if (data.success && data.order) {
+      // Format: { success: true, order: {...} }
+      order = data.order;
+    } else {
       alert("❌ Order creation failed");
       return;
     }
 
-    const order = data;
-
     // 2️⃣ Razorpay checkout
     var options = {
-      key: "rzp_test_S0eeQglGbygi4C", // ONLY Key ID
+      key: "rzp_test_S0eeQglGbygi4C",
       amount: order.amount,
       currency: order.currency,
       name: "Prashant",
@@ -33,7 +37,6 @@ async function buyNow() {
       handler: async function (response) {
         console.log("Razorpay Response:", response);
 
-        // 3️⃣ Verify payment
         const verifyRes = await fetch("https://razorpay-backend-ke6v.onrender.com/verify-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -54,15 +57,7 @@ async function buyNow() {
         }
       },
 
-      prefill: {
-        name: "Prashant",
-        email: "test@example.com",
-        contact: "9999999999"
-      },
-
-      theme: {
-        color: "#2b7cff"
-      }
+      theme: { color: "#2b7cff" }
     };
 
     var rzp = new Razorpay(options);
