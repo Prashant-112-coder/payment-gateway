@@ -1,9 +1,7 @@
 async function buyNow() {
   try {
-    console.log("Creating order...");
-
-    // 1️⃣ Create order (LOCAL BACKEND)
-    const response = await fetch("http://localhost:10000/create-order", {
+    // 1️⃣ Create order
+    const response = await fetch("https://razorpay-backend-ke6v.onrender.com/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -15,13 +13,24 @@ async function buyNow() {
     const data = await response.json();
     console.log("Order Response:", data);
 
-    // ✅ Old style check (order object directly)
-    if (!data || !data.id) {
-      alert("❌ Order creation failed");
+    // Handle different response shapes from backend
+    if (!response.ok) {
+      console.error("Create order request failed:", response.status, data);
+      alert("❌ Order creation failed — check console for details.");
       return;
     }
 
-    const order = data;
+    const orderId = data.id || data.order_id || data.order?.id || data.orderId || (data.data && data.data.id);
+    const orderAmount = data.amount || data.order?.amount || (data.data && data.data.amount) || 9900;
+    const orderCurrency = data.currency || data.order?.currency || (data.data && data.data.currency) || "INR";
+
+    if (!orderId) {
+      console.error("Order creation response missing id:", data);
+      alert("❌ Order creation failed — check console for details.");
+      return;
+    }
+
+    const order = { id: orderId, amount: orderAmount, currency: orderCurrency };
 
     // 2️⃣ Razorpay checkout
     var options = {
@@ -35,8 +44,8 @@ async function buyNow() {
       handler: async function (response) {
         console.log("Razorpay Response:", response);
 
-        // 3️⃣ Verify payment (LOCAL BACKEND)
-        const verifyRes = await fetch("http://localhost:10000/verify-payment", {
+        // 3️⃣ Verify payment
+        const verifyRes = await fetch("https://razorpay-backend-ke6v.onrender.com/verify-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(response)
@@ -46,7 +55,11 @@ async function buyNow() {
         console.log("Verify Response:", result);
 
         if (result.success) {
-          alert("✅ Payment Successful!");
+          showSuccessPopup(
+            response.razorpay_order_id,
+            response.razorpay_payment_id,
+            options.amount
+          );
         } else {
           alert("❌ Payment Verification Failed");
         }
