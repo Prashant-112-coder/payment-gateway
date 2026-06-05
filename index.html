@@ -2,43 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Razorpay Payment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Template Store</title>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <style>
-    body { font-family: Arial; }
-    #successModal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      align-items: center;
-      justify-content: center;
-    }
-    .modal {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      width: 300px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header class="hero-header">
+    <nav class="nav-bar">
+      <div class="brand">ResumeCraft</div>
+      <button class="nav-cta" onclick="buyNow()">Buy Template</button>
+    </nav>
 
-<h2>Buy Resume Template – ₹99</h2>
-<button onclick="buyNow()">Buy Now</button>
+    <section class="hero-panel">
+      <div class="hero-copy">
+        <span class="eyebrow">Premium resume designs</span>
+        <h1>Launch your career with a stunning resume template</h1>
+        <p>Professional, editable and recruiter-friendly resumes for every job application. Ready in minutes, optimized for success.</p>
+        <div class="hero-actions">
+          <button class="primary-btn" onclick="buyNow()">Buy Now - ₹99</button>
+          <a href="#features" class="secondary-link">See features</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="product-badge">Best Seller</div>
+        <div class="template-preview"></div>
+        <div class="product-info">
+          <h2>Modern Resume Pack</h2>
+          <p>One clean, modern resume design plus cover letter layout. Fully customizable and ATS-friendly.</p>
+          <div class="price">₹99</div>
+        </div>
+      </div>
+    </section>
+  </header>
 
-<!-- SUCCESS MODAL -->
-<div id="successModal">
-  <div class="modal">
-    <h3>✅ Payment Successful</h3>
-    <p>Order ID: <span id="orderId"></span></p>
-    <p>Payment ID: <span id="paymentId"></span></p>
-    <p>Amount: ₹<span id="amount"></span></p>
-    <p>Date: <span id="date"></span></p>
-    <button onclick="closeModal()">Close</button>
+  <main>
+    <section id="features" class="feature-grid">
+      <article class="feature-card fade-up">
+        <h3>Editable in minutes</h3>
+        <p>Open the template in Word or Google Docs and personalize your information instantly.</p>
+      </article>
+      <article class="feature-card fade-up delay-1">
+        <h3>ATS friendly</h3>
+        <p>Designed to pass applicant tracking systems while still looking polished for hiring managers.</p>
+      </article>
+      <article class="feature-card fade-up delay-2">
+        <h3>Instant download</h3>
+        <p>Complete your purchase and receive download access immediately—no waiting required.</p>
+      </article>
+      <article class="feature-card fade-up delay-3">
+        <h3>One price, unlimited use</h3>
+        <p>Use it for multiple applications and tailor the layout to any industry.</p>
+      </article>
+    </section>
+
+    <section class="store-section">
+      <div class="store-copy">
+        <h2>Why choose ResumeCraft?</h2>
+        <p>Every template is built to highlight your experience clearly while keeping the design elegant and modern. Perfect for developers, designers, marketers, and professionals across every field.</p>
+      </div>
+      <div class="store-cards">
+        <div class="store-card pop-in">
+          <h4>Professional layout</h4>
+          <p>Structured sections and clean typography keep your resume readable and impactful.</p>
+        </div>
+        <div class="store-card pop-in delay-1">
+          <h4>Fast delivery</h4>
+          <p>Purchase once and access the download link immediately after payment.</p>
+        </div>
+        <div class="store-card pop-in delay-2">
+          <h4>Single-page focus</h4>
+          <p>A single-page layout ensures your best experience is easy to scan and recruiter-ready.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="successModal" class="modal-overlay">
+    <div class="modal-card">
+      <h3>✅ Payment Successful</h3>
+      <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+      <p><strong>Payment ID:</strong> <span id="paymentId"></span></p>
+      <p><strong>Amount:</strong> ₹<span id="amount"></span></p>
+      <p><strong>Date:</strong> <span id="date"></span></p>
+      <button class="primary-btn" onclick="closeModal()">Close</button>
+    </div>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
