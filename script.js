@@ -1,12 +1,18 @@
 const BACKEND_URL = "https://razorpay-backend-ke6v.onrender.com";
-const PRODUCT_AMOUNT = 9900;
-const PRODUCT_CURRENCY = "INR";
+const PRODUCT_ID = "modern-resume-pack";
 
 function setPaymentStatus(message, state = "") {
   const status = document.getElementById("paymentStatus");
   if (!status) return;
   status.textContent = message;
   status.dataset.state = state;
+}
+
+function setBuyButtonsDisabled(disabled) {
+  document.querySelectorAll(".buy-button").forEach((button) => {
+    button.disabled = disabled;
+    button.setAttribute("aria-busy", String(disabled));
+  });
 }
 
 async function readApiResponse(response) {
@@ -23,6 +29,7 @@ async function readApiResponse(response) {
 }
 
 async function buyNow() {
+  setBuyButtonsDisabled(true);
   setPaymentStatus("Preparing secure checkout…", "loading");
 
   try {
@@ -36,10 +43,7 @@ async function buyNow() {
     const orderResponse = await fetch(`${BACKEND_URL}/create-order`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        amount: PRODUCT_AMOUNT,
-        currency: PRODUCT_CURRENCY
-      })
+      body: JSON.stringify({ productId: PRODUCT_ID })
     });
 
     const orderData = await readApiResponse(orderResponse);
@@ -59,7 +63,7 @@ async function buyNow() {
       amount: order.amount,
       currency: order.currency,
       name: "ResumeCraft",
-      description: "Modern Resume Pack",
+      description: orderData.product?.name || "Modern Resume Pack",
       order_id: order.id,
 
       handler: async function (response) {
@@ -85,23 +89,19 @@ async function buyNow() {
           setPaymentStatus("Payment verified successfully.", "success");
 
           showSuccessPopup(
-            response.razorpay_order_id,
-            response.razorpay_payment_id,
-            order.amount
+            verifyData.orderId,
+            verifyData.paymentId,
+            verifyData.amount
           );
         } catch (error) {
           console.error("Verification error:", error);
           setPaymentStatus(
-            "Payment was received, but verification could not be completed. Please contact support with your payment ID.",
+            "Payment verification is still pending. Keep your payment ID and contact support before retrying.",
             "error"
           );
+        } finally {
+          setBuyButtonsDisabled(false);
         }
-      },
-
-      prefill: {
-        name: "",
-        email: "",
-        contact: ""
       },
 
       theme: {
@@ -111,6 +111,7 @@ async function buyNow() {
       modal: {
         ondismiss: function () {
           setPaymentStatus("Payment cancelled. You can try again whenever you're ready.", "error");
+          setBuyButtonsDisabled(false);
         }
       }
     };
@@ -118,9 +119,10 @@ async function buyNow() {
     const rzp = new Razorpay(options);
 
     rzp.on("payment.failed", function (event) {
-      console.error("Payment failed:", event);
+      console.error("Payment failed:", event?.error?.code);
       const message = event?.error?.description || "Payment could not be completed.";
       setPaymentStatus(message, "error");
+      setBuyButtonsDisabled(false);
     });
 
     setPaymentStatus("Secure checkout is ready.", "success");
@@ -128,6 +130,7 @@ async function buyNow() {
   } catch (error) {
     console.error("Checkout error:", error);
     setPaymentStatus(error.message || "Unable to start payment. Please try again.", "error");
+    setBuyButtonsDisabled(false);
   }
 }
 
