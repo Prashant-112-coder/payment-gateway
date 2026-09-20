@@ -1,4 +1,4 @@
-const API="https://razorpay-backend-ke6v.onrender.com";
+const API="/api/backend";
 const $=s=>document.querySelector(s);
 const money=v=>new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:0}).format((Number(v)||0)/100);
 const date=v=>v?new Date(v).toLocaleString("en-IN",{dateStyle:"medium",timeStyle:"short"}):"—";
