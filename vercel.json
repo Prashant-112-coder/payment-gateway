@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/backend/:path*",
+      "destination": "https://razorpay-backend-ke6v.onrender.com/:path*"
+    }
+  ]
+}
