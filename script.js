@@ -143,7 +143,8 @@ async function buyNow() {
           showSuccessPopup(
             verifyData.orderId,
             verifyData.paymentId,
-            verifyData.amount
+            verifyData.amount,
+            verifyData.downloadUrl
           );
         } catch (error) {
           console.error("Verification error:", {
@@ -192,11 +193,20 @@ async function buyNow() {
   }
 }
 
-function showSuccessPopup(orderId, paymentId, amountPaise) {
+function showSuccessPopup(orderId, paymentId, amountPaise, downloadUrl) {
   document.getElementById("orderId").textContent = orderId;
   document.getElementById("paymentId").textContent = paymentId;
   document.getElementById("amount").textContent = (amountPaise / 100).toFixed(2);
   document.getElementById("date").textContent = new Date().toLocaleString();
+
+  const downloadButton = document.getElementById("downloadButton");
+  if (downloadButton) {
+    downloadButton.disabled = !downloadUrl;
+    downloadButton.hidden = !downloadUrl;
+    downloadButton.onclick = () => {
+      if (downloadUrl) window.location.href = downloadUrl;
+    };
+  }
 
   const modal = document.getElementById("successModal");
   modal.classList.add("show");
