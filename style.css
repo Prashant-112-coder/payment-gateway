@@ -73,8 +73,8 @@ button {
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 
-.nav-cta:hover,
-.primary-btn:hover {
+.nav-cta:hover:not(:disabled),
+.primary-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   filter: brightness(1.05);
 }
@@ -382,6 +382,12 @@ main {
   }
 }
 
+
+.buy-button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+  transform: none;
+}
 
 .payment-status {
   min-height: 24px;
