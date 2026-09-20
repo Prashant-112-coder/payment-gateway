@@ -27,7 +27,7 @@
       </div>
       <div class="hero-card">
         <div class="product-badge">Best Seller</div>
-        <div class="template-preview"></div>
+        <div class="template-preview" aria-label="Resume template preview" role="img"><div class="preview-header"></div><div class="preview-line wide"></div><div class="preview-line"></div><div class="preview-grid"><span></span><span></span></div><div class="preview-line short"></div><div class="preview-line"></div><div class="preview-line medium"></div></div>
         <div class="product-info">
           <h2>Modern Resume Pack</h2>
           <p>One clean, modern resume design plus cover letter layout. Fully customizable and ATS-friendly.</p>
@@ -79,9 +79,9 @@
     </section>
   </main>
 
-  <div id="successModal" class="modal-overlay" aria-hidden="true">
+  <div id="successModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="successTitle">
     <div class="modal-card">
-      <h3>Payment Successful</h3>
+      <h3 id="successTitle">Payment Successful</h3>
       <p><strong>Order ID:</strong> <span id="orderId"></span></p>
       <p><strong>Payment ID:</strong> <span id="paymentId"></span></p>
       <p><strong>Amount:</strong> ₹<span id="amount"></span></p>
