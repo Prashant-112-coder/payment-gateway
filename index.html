@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="announcement">Launch offer · Premium career templates from ₹99</div>
+  <div class="announcement">Launch offer · Premium ATS-friendly templates from ₹49</div>
 
   <header class="site-header">
     <nav class="nav-bar">
@@ -77,7 +77,7 @@
             </div>
           </div>
         </div>
-        <div class="floating-card price-card"><span>Only</span><strong>₹99</strong></div>
+        <div class="floating-card price-card"><span>Only</span><strong>₹49</strong></div>
         <div class="floating-card check-card">✓ <span>ATS ready</span></div>
       </div>
     </section>
@@ -92,49 +92,27 @@
     <section id="products" class="product-section section">
       <div class="section-heading">
         <div>
-          <span class="eyebrow">THE FIRST DROP</span>
-          <h2>One resume pack.<br /><span>Everything you need to start.</span></h2>
+          <span class="eyebrow">THE RESUMECRAFT LIBRARY</span>
+          <h2>Pick your style.<br /><span>Pay ₹49. Download instantly.</span></h2>
         </div>
-        <p>Designed for students, developers and professionals who want a polished resume without spending hours fighting formatting. Pay once, then receive a protected download link.</p>
+        <p>Seven original, editable resume templates built around clean typography, standard sections and ATS-friendly structure. Choose one for your target role and reuse it across applications.</p>
       </div>
 
-      <article class="product-card" id="productCard">
-        <div class="product-preview">
-          <span class="preview-tag">MODERN RESUME PACK</span>
-          <div class="mini-paper">
-            <div class="mini-heading"></div>
-            <div class="mini-columns"><div><i></i><i></i><i></i><i></i></div><div><i></i><i></i><i></i></div></div>
-          </div>
-        </div>
-        <div class="product-details">
-          <div class="product-rating">★★★★★ <span>Premium career template</span></div>
-          <h3>Modern Resume Pack</h3>
-          <p>A clean resume layout with a matching cover-letter structure, built around readable hierarchy and recruiter-friendly sections.</p>
-          <ul>
-            <li>Editable professional resume layout</li>
-            <li>Matching cover-letter structure</li>
-            <li>ATS-friendly typography and hierarchy</li>
-            <li>Reusable for multiple applications</li>
-          </ul>
+      <div class="catalog-note">
+        <span>⚡ Launch price: <strong>₹49 each</strong></span>
+        <span>✓ Secure Razorpay checkout</span>
+        <span>✓ Protected download</span>
+      </div>
 
-          <div class="customer-fields">
-            <label>
-              Name
-              <input id="customerName" type="text" maxlength="100" autocomplete="name" placeholder="Your name" />
-            </label>
-            <label>
-              Email <span>for your receipt</span>
-              <input id="customerEmail" type="email" maxlength="160" autocomplete="email" placeholder="you@example.com" />
-            </label>
-          </div>
+      <div class="customer-fields catalog-customer-fields">
+        <label>Name<input id="customerName" type="text" maxlength="100" autocomplete="name" placeholder="Your name" /></label>
+        <label>Email <span>for your receipt</span><input id="customerEmail" type="email" maxlength="160" autocomplete="email" placeholder="you@example.com" /></label>
+      </div>
 
-          <div class="purchase-row">
-            <div><span class="price-label">Launch price</span><strong>₹99</strong></div>
-            <button class="primary-btn buy-button" onclick="buyNow()">Buy securely <span>→</span></button>
-          </div>
-          <div class="secure-note">🔒 Secured by Razorpay · Your card/UPI details never touch our server.</div>
-        </div>
-      </article>
+      <div id="productGrid" class="product-grid" aria-live="polite">
+        <div class="catalog-loading">Loading the template library…</div>
+      </div>
+      <p class="ats-disclaimer">ATS scores are diagnostic and vary by checker and job description. The 85+/90+/95+ labels are ResumeCraft positioning tiers, not a guaranteed score or universal ATS pass mark.</p>
     </section>
 
     <section id="why" class="section benefits-section">
