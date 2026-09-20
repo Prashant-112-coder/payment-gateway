@@ -29,3 +29,23 @@
 4. Add robust loading/error/cancel states.
 5. Add repository hygiene for generated dependencies (`node_modules`) in a separate safe change.
 6. Then begin the UI/UX redesign in small increments.
+
+
+### 2026-09-20 live incident fix
+
+- Traced the reported Vercel "Order creation failed" popup to the deployed Render backend.
+- Render logs showed HTTP 401 from Razorpay with `BAD_REQUEST_ERROR` and the message that an API key is required. The backend process itself was running normally.
+- Identified that the deployed backend is maintained in the separate `Prashant-112-coder/razorpay_backend` repository, which is the source for the Render service `razorpay_backend`.
+- Hardened the backend configuration so missing Razorpay credentials produce an explicit configuration response instead of an opaque provider failure.
+- Added `GET /api/razorpay-key` so the frontend obtains the public key from backend configuration.
+- Added amount/currency validation and safer payment-signature verification.
+- Updated the frontend to fetch the public key, wait for backend verification before showing a success state, and show useful loading/cancel/error feedback.
+- Removed real credential examples from the backend setup guide and replaced them with placeholders.
+- Backend code commit deployed successfully to Render before the documentation-only follow-up deployment.
+- Remaining live blocker: the Render service needs valid, rotated Razorpay credentials configured as `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET`. A previously exposed credential must not be reused.
+
+### Verification
+
+- Static frontend/backend changes reviewed.
+- Render deployment for backend code reached `live`.
+- Live order creation cannot be marked successful until the Render Razorpay credentials are configured with a valid rotated key pair.
