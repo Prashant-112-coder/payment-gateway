@@ -57,8 +57,9 @@ function validateCustomer(customer) {
 }
 
 async function buyNow() {
+  const customer = getCustomer();
+
   try {
-    const customer = getCustomer();
     validateCustomer(customer);
   } catch (error) {
     setPaymentStatus(error.message, "error");
