@@ -407,3 +407,73 @@ main {
 .payment-status[data-state="error"] {
   color: #fca5a5;
 }
+
+
+.template-preview {
+  position: relative;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: linear-gradient(145deg, #f8fafc, #dbeafe);
+  overflow: hidden;
+}
+
+.template-preview::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  right: -80px;
+  bottom: -90px;
+  border-radius: 50%;
+  background: rgba(91, 130, 255, 0.16);
+}
+
+.preview-header {
+  width: 42%;
+  height: 18px;
+  border-radius: 6px;
+  background: #1e293b;
+}
+
+.preview-line {
+  width: 78%;
+  height: 8px;
+  border-radius: 4px;
+  background: #94a3b8;
+}
+
+.preview-line.wide {
+  width: 92%;
+  height: 12px;
+  background: #475569;
+}
+
+.preview-line.short {
+  width: 48%;
+}
+
+.preview-line.medium {
+  width: 64%;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.preview-grid span {
+  display: block;
+  height: 58px;
+  border-radius: 10px;
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+}
+
+@media (max-width: 620px) {
+  .template-preview {
+    height: 220px;
+  }
+}
