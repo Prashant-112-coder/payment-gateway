@@ -22,13 +22,50 @@ async function readApiResponse(response) {
     : { message: await response.text() };
 
   if (!response.ok) {
-    throw new Error(data.message || "The payment service returned an error.");
+    const error = new Error(data.message || "The payment service returned an error.");
+    error.requestId = data.requestId;
+    throw error;
   }
 
   return data;
 }
 
+function createIdempotencyKey() {
+  if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+  return "checkout_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+}
+
+function getCustomer() {
+  return {
+    name: document.getElementById("customerName")?.value.trim() || "",
+    email: document.getElementById("customerEmail")?.value.trim() || ""
+  };
+}
+
+function validateCustomer(customer) {
+  if (!customer.name) {
+    throw new Error("Please enter your name before checkout.");
+  }
+
+  if (!customer.email) {
+    throw new Error("Please enter your email so we can identify your receipt.");
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customer.email)) {
+    throw new Error("Please enter a valid email address.");
+  }
+}
+
 async function buyNow() {
+  try {
+    const customer = getCustomer();
+    validateCustomer(customer);
+  } catch (error) {
+    setPaymentStatus(error.message, "error");
+    document.getElementById("customerEmail")?.focus();
+    return;
+  }
+
   setBuyButtonsDisabled(true);
   setPaymentStatus("Preparing secure checkout…", "loading");
 
@@ -42,8 +79,14 @@ async function buyNow() {
 
     const orderResponse = await fetch(`${BACKEND_URL}/create-order`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId: PRODUCT_ID })
+      headers: {
+        "Content-Type": "application/json",
+        "X-Idempotency-Key": createIdempotencyKey()
+      },
+      body: JSON.stringify({
+        productId: PRODUCT_ID,
+        customer
+      })
     });
 
     const orderData = await readApiResponse(orderResponse);
@@ -65,7 +108,16 @@ async function buyNow() {
       name: "ResumeCraft",
       description: orderData.product?.name || "Modern Resume Pack",
       order_id: order.id,
-
+      prefill: {
+        name: customer.name,
+        email: customer.email
+      },
+      notes: {
+        productId: PRODUCT_ID
+      },
+      theme: {
+        color: "#6d7cff"
+      },
       handler: async function (response) {
         setPaymentStatus("Payment received. Verifying securely…", "loading");
 
@@ -87,27 +139,24 @@ async function buyNow() {
           }
 
           setPaymentStatus("Payment verified successfully.", "success");
-
           showSuccessPopup(
             verifyData.orderId,
             verifyData.paymentId,
             verifyData.amount
           );
         } catch (error) {
-          console.error("Verification error:", error);
+          console.error("Verification error:", {
+            message: error.message,
+            requestId: error.requestId
+          });
           setPaymentStatus(
-            "Payment verification is still pending. Keep your payment ID and contact support before retrying.",
+            "Payment verification is pending. Keep your payment ID and contact support before retrying.",
             "error"
           );
         } finally {
           setBuyButtonsDisabled(false);
         }
       },
-
-      theme: {
-        color: "#2b7cff"
-      },
-
       modal: {
         ondismiss: function () {
           setPaymentStatus("Payment cancelled. You can try again whenever you're ready.", "error");
@@ -128,8 +177,16 @@ async function buyNow() {
     setPaymentStatus("Secure checkout is ready.", "success");
     rzp.open();
   } catch (error) {
-    console.error("Checkout error:", error);
-    setPaymentStatus(error.message || "Unable to start payment. Please try again.", "error");
+    console.error("Checkout error:", {
+      message: error.message,
+      requestId: error.requestId
+    });
+    setPaymentStatus(
+      error.requestId
+        ? `${error.message} Reference: ${error.requestId}`
+        : error.message || "Unable to start payment. Please try again.",
+      "error"
+    );
     setBuyButtonsDisabled(false);
   }
 }
@@ -149,4 +206,11 @@ function closeModal() {
   const modal = document.getElementById("successModal");
   modal.classList.remove("show");
   modal.setAttribute("aria-hidden", "true");
+}
+
+function scrollToProduct() {
+  document.getElementById("products")?.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 }
