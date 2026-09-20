@@ -1,0 +1,19 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate storefront files
+        run: |
+          test -f index.html
+          test -f script.js
+          test -f style.css
+          ! grep -R "RAZORPAY_KEY_SECRET" . --exclude-dir=.git
