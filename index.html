@@ -95,7 +95,7 @@
           <span class="eyebrow">THE FIRST DROP</span>
           <h2>One resume pack.<br /><span>Everything you need to start.</span></h2>
         </div>
-        <p>Designed for students, developers and professionals who want a polished resume without spending hours fighting formatting.</p>
+        <p>Designed for students, developers and professionals who want a polished resume without spending hours fighting formatting. Pay once, then receive a protected download link.</p>
       </div>
 
       <article class="product-card" id="productCard">
@@ -165,7 +165,7 @@
         <details><summary>Is the payment secure?</summary><p>Yes. Checkout is handled by Razorpay and payment signatures are verified by the backend before a purchase is marked successful.</p></details>
         <details><summary>Can I use the template more than once?</summary><p>Yes. The template is designed to be adapted for multiple job applications.</p></details>
         <details><summary>Is the resume ATS-friendly?</summary><p>The design uses a straightforward structure and readable hierarchy intended to work well with common applicant-tracking workflows.</p></details>
-        <details><summary>What happens after payment?</summary><p>Your payment is verified by our backend and an order receipt is shown. Protected digital delivery is the next platform capability being added to the store.</p></details>
+        <details><summary>What happens after payment?</summary><p>Your payment is verified by the backend, the order is stored, and a protected download link is generated. The link expires after 7 days and is limited to 5 downloads.</p></details>
       </div>
     </section>
   </main>
@@ -184,14 +184,17 @@
       <div class="success-icon">✓</div>
       <span class="eyebrow">PAYMENT VERIFIED</span>
       <h3 id="successTitle">You're all set.</h3>
-      <p>Your payment has been verified successfully. Keep this receipt information for your records.</p>
+      <p>Your payment has been verified successfully. Your protected product download is ready below.</p>
       <div class="receipt">
         <div><span>Order ID</span><strong id="orderId"></strong></div>
         <div><span>Payment ID</span><strong id="paymentId"></strong></div>
         <div><span>Amount</span><strong>₹<span id="amount"></span></strong></div>
         <div><span>Date</span><strong id="date"></strong></div>
       </div>
-      <button class="primary-btn full-btn" onclick="closeModal()">Done</button>
+      <div class="modal-actions">
+        <button id="downloadButton" class="primary-btn full-btn" type="button">Download your pack</button>
+        <button class="secondary-modal-btn" type="button" onclick="closeModal()">Done</button>
+      </div>
     </div>
   </div>
 
