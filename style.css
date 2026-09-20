@@ -304,6 +304,9 @@ footer { padding: 55px 24px 24px; border-top: 1px solid var(--line); }
 .receipt span { color: var(--muted); font-size: .72rem; }
 .receipt strong { max-width: 60%; overflow-wrap: anywhere; text-align: right; font-size: .72rem; }
 .full-btn { width: 100%; }
+.modal-actions { display: grid; gap: 10px; }
+.secondary-modal-btn { width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 13px 16px; background: transparent; color: var(--text); font: 700 .9rem Manrope; cursor: pointer; }
+.secondary-modal-btn:hover { border-color: #7d8cff; }
 
 .reveal { opacity: 0; transform: translateY(18px); animation: reveal .8s ease forwards; }
 .delay-1 { animation-delay: .13s; }
