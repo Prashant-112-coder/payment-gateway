@@ -381,3 +381,23 @@ main {
     min-height: auto;
   }
 }
+
+
+.payment-status {
+  min-height: 24px;
+  margin: 14px 0 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.payment-status[data-state="loading"] {
+  color: var(--muted);
+}
+
+.payment-status[data-state="success"] {
+  color: #67e8f9;
+}
+
+.payment-status[data-state="error"] {
+  color: #fca5a5;
+}
