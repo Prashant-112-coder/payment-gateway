@@ -3,90 +3,195 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resume Template Store</title>
+  <meta name="description" content="ResumeCraft — premium, ATS-friendly career templates for modern professionals." />
+  <meta name="theme-color" content="#070b14" />
+  <title>ResumeCraft — Career Templates That Get Noticed</title>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="hero-header">
-    <nav class="nav-bar">
-      <div class="brand">ResumeCraft</div>
-      <button class="nav-cta buy-button" onclick="buyNow()">Buy Template</button>
-    </nav>
+  <div class="announcement">Launch offer · Premium career templates from ₹99</div>
 
-    <section class="hero-panel">
-      <div class="hero-copy">
-        <span class="eyebrow">Premium resume designs</span>
-        <h1>Launch your career with a stunning resume template</h1>
-        <p>Professional, editable and recruiter-friendly resumes for every job application. Ready in minutes, optimized for success.</p>
-        <div class="hero-actions">
-          <button class="primary-btn buy-button" onclick="buyNow()">Buy Now</button>
-          <a href="#features" class="secondary-link">See features</a>
-        </div>
-        <p id="paymentStatus" class="payment-status" role="status" aria-live="polite"></p>
+  <header class="site-header">
+    <nav class="nav-bar">
+      <a class="brand" href="#" aria-label="ResumeCraft home">
+        <span class="brand-mark">R</span>
+        ResumeCraft
+      </a>
+      <div class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#why">Why ResumeCraft</a>
+        <a href="#faq">FAQ</a>
       </div>
-      <div class="hero-card">
-        <div class="product-badge">Best Seller</div>
-        <div class="template-preview" aria-label="Resume template preview" role="img"><div class="preview-header"></div><div class="preview-line wide"></div><div class="preview-line"></div><div class="preview-grid"><span></span><span></span></div><div class="preview-line short"></div><div class="preview-line"></div><div class="preview-line medium"></div></div>
-        <div class="product-info">
-          <h2>Modern Resume Pack</h2>
-          <p>One clean, modern resume design plus cover letter layout. Fully customizable and ATS-friendly.</p>
-          <div class="price">₹99</div>
-        </div>
-      </div>
-    </section>
+      <button class="nav-cta buy-button" onclick="scrollToProduct()">Get the template</button>
+    </nav>
   </header>
 
   <main>
-    <section id="features" class="feature-grid">
-      <article class="feature-card fade-up">
-        <h3>Editable in minutes</h3>
-        <p>Open the template in Word or Google Docs and personalize your information instantly.</p>
-      </article>
-      <article class="feature-card fade-up delay-1">
-        <h3>ATS friendly</h3>
-        <p>Designed to pass applicant tracking systems while still looking polished for hiring managers.</p>
-      </article>
-      <article class="feature-card fade-up delay-2">
-        <h3>Instant download</h3>
-        <p>Complete your purchase and receive access to the template after payment verification.</p>
-      </article>
-      <article class="feature-card fade-up delay-3">
-        <h3>One price, unlimited use</h3>
-        <p>Use it for multiple applications and tailor the layout to any industry.</p>
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">CAREER TOOLS · BUILT FOR MODERN JOB SEARCH</span>
+        <h1>Make your first impression <span>impossible to ignore.</span></h1>
+        <p class="hero-lead">Premium, editable and ATS-friendly career templates designed to help you present your work with clarity and confidence.</p>
+        <div class="hero-actions">
+          <button class="primary-btn buy-button" onclick="scrollToProduct()">Explore the resume pack <span>→</span></button>
+          <a href="#why" class="secondary-link">See what’s included</a>
+        </div>
+        <div class="trust-row">
+          <span>✓ ATS-friendly structure</span>
+          <span>✓ Editable layout</span>
+          <span>✓ Secure Razorpay checkout</span>
+        </div>
+        <p id="paymentStatus" class="payment-status" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="hero-visual reveal delay-1">
+        <div class="glow"></div>
+        <div class="resume-sheet">
+          <div class="resume-top">
+            <div>
+              <div class="resume-name">ALEX MORGAN</div>
+              <div class="resume-role">FULL-STACK DEVELOPER</div>
+            </div>
+            <div class="resume-contact">Bengaluru · alex@email.com<br />github.com/alex</div>
+          </div>
+          <div class="resume-divider"></div>
+          <div class="resume-layout">
+            <div>
+              <div class="sheet-label">EXPERIENCE</div>
+              <div class="sheet-title">Senior Software Engineer</div>
+              <div class="sheet-line wide"></div>
+              <div class="sheet-line"></div>
+              <div class="sheet-line medium"></div>
+              <div class="sheet-title small-title">Software Engineer</div>
+              <div class="sheet-line wide"></div>
+              <div class="sheet-line"></div>
+            </div>
+            <div>
+              <div class="sheet-label">SKILLS</div>
+              <div class="skill-pill-row"><span>React</span><span>Node</span><span>Cloud</span></div>
+              <div class="skill-pill-row"><span>Java</span><span>SQL</span></div>
+              <div class="sheet-label space-top">EDUCATION</div>
+              <div class="sheet-line medium"></div>
+              <div class="sheet-line short"></div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-card price-card"><span>Only</span><strong>₹99</strong></div>
+        <div class="floating-card check-card">✓ <span>ATS ready</span></div>
+      </div>
+    </section>
+
+    <section class="stats-strip">
+      <div><strong>01</strong><span>Premium template</span></div>
+      <div><strong>ATS</strong><span>Readable structure</span></div>
+      <div><strong>∞</strong><span>Applications</span></div>
+      <div><strong>₹99</strong><span>Launch price</span></div>
+    </section>
+
+    <section id="products" class="product-section section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">THE FIRST DROP</span>
+          <h2>One resume pack.<br /><span>Everything you need to start.</span></h2>
+        </div>
+        <p>Designed for students, developers and professionals who want a polished resume without spending hours fighting formatting.</p>
+      </div>
+
+      <article class="product-card" id="productCard">
+        <div class="product-preview">
+          <span class="preview-tag">MODERN RESUME PACK</span>
+          <div class="mini-paper">
+            <div class="mini-heading"></div>
+            <div class="mini-columns"><div><i></i><i></i><i></i><i></i></div><div><i></i><i></i><i></i></div></div>
+          </div>
+        </div>
+        <div class="product-details">
+          <div class="product-rating">★★★★★ <span>Premium career template</span></div>
+          <h3>Modern Resume Pack</h3>
+          <p>A clean resume layout with a matching cover-letter structure, built around readable hierarchy and recruiter-friendly sections.</p>
+          <ul>
+            <li>Editable professional resume layout</li>
+            <li>Matching cover-letter structure</li>
+            <li>ATS-friendly typography and hierarchy</li>
+            <li>Reusable for multiple applications</li>
+          </ul>
+
+          <div class="customer-fields">
+            <label>
+              Name
+              <input id="customerName" type="text" maxlength="100" autocomplete="name" placeholder="Your name" />
+            </label>
+            <label>
+              Email <span>for your receipt</span>
+              <input id="customerEmail" type="email" maxlength="160" autocomplete="email" placeholder="you@example.com" />
+            </label>
+          </div>
+
+          <div class="purchase-row">
+            <div><span class="price-label">Launch price</span><strong>₹99</strong></div>
+            <button class="primary-btn buy-button" onclick="buyNow()">Buy securely <span>→</span></button>
+          </div>
+          <div class="secure-note">🔒 Secured by Razorpay · Your card/UPI details never touch our server.</div>
+        </div>
       </article>
     </section>
 
-    <section class="store-section">
-      <div class="store-copy">
-        <h2>Why choose ResumeCraft?</h2>
-        <p>Every template is built to highlight your experience clearly while keeping the design elegant and modern. Perfect for developers, designers, marketers, and professionals across every field.</p>
+    <section id="why" class="section benefits-section">
+      <div class="section-heading centered">
+        <span class="eyebrow">WHY RESUMECRAFT</span>
+        <h2>Less formatting.<br /><span>More focus on your story.</span></h2>
       </div>
-      <div class="store-cards">
-        <div class="store-card pop-in">
-          <h4>Professional layout</h4>
-          <p>Structured sections and clean typography keep your resume readable and impactful.</p>
-        </div>
-        <div class="store-card pop-in delay-1">
-          <h4>Fast delivery</h4>
-          <p>Payment is verified securely before your purchase is confirmed.</p>
-        </div>
-        <div class="store-card pop-in delay-2">
-          <h4>Single-page focus</h4>
-          <p>A single-page layout ensures your best experience is easy to scan and recruiter-ready.</p>
-        </div>
+      <div class="benefit-grid">
+        <article><span class="benefit-icon">01</span><h3>Recruiter-friendly</h3><p>Clear hierarchy and simple structure make important experience easier to scan.</p></article>
+        <article><span class="benefit-icon">02</span><h3>Made to edit</h3><p>Start with a strong visual system instead of rebuilding your resume from a blank page.</p></article>
+        <article><span class="benefit-icon">03</span><h3>Built for developers</h3><p>Space for projects, skills, links and measurable impact without visual clutter.</p></article>
+        <article><span class="benefit-icon">04</span><h3>Secure checkout</h3><p>Orders use server-owned pricing and backend payment verification through Razorpay.</p></article>
+      </div>
+    </section>
+
+    <section class="quote-section section">
+      <div class="quote-mark">“</div>
+      <blockquote>A great resume should make your experience easier to understand — not harder to find.</blockquote>
+      <span>ResumeCraft design principle</span>
+    </section>
+
+    <section id="faq" class="section faq-section">
+      <div class="section-heading centered">
+        <span class="eyebrow">QUESTIONS</span>
+        <h2>Before you buy</h2>
+      </div>
+      <div class="faq-list">
+        <details><summary>Is the payment secure?</summary><p>Yes. Checkout is handled by Razorpay and payment signatures are verified by the backend before a purchase is marked successful.</p></details>
+        <details><summary>Can I use the template more than once?</summary><p>Yes. The template is designed to be adapted for multiple job applications.</p></details>
+        <details><summary>Is the resume ATS-friendly?</summary><p>The design uses a straightforward structure and readable hierarchy intended to work well with common applicant-tracking workflows.</p></details>
+        <details><summary>What happens after payment?</summary><p>Your payment is verified by our backend and an order receipt is shown. Protected digital delivery is the next platform capability being added to the store.</p></details>
       </div>
     </section>
   </main>
 
+  <footer>
+    <div class="footer-main">
+      <a class="brand" href="#"><span class="brand-mark">R</span> ResumeCraft</a>
+      <p>Premium career resources for people building what’s next.</p>
+      <button class="nav-cta buy-button" onclick="scrollToProduct()">Get the template</button>
+    </div>
+    <div class="footer-bottom"><span>© 2026 ResumeCraft</span><span>Secure payments · Built for the modern job search</span></div>
+  </footer>
+
   <div id="successModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="successTitle">
     <div class="modal-card">
-      <h3 id="successTitle">Payment Successful</h3>
-      <p><strong>Order ID:</strong> <span id="orderId"></span></p>
-      <p><strong>Payment ID:</strong> <span id="paymentId"></span></p>
-      <p><strong>Amount:</strong> ₹<span id="amount"></span></p>
-      <p><strong>Date:</strong> <span id="date"></span></p>
-      <button class="primary-btn" onclick="closeModal()">Close</button>
+      <div class="success-icon">✓</div>
+      <span class="eyebrow">PAYMENT VERIFIED</span>
+      <h3 id="successTitle">You're all set.</h3>
+      <p>Your payment has been verified successfully. Keep this receipt information for your records.</p>
+      <div class="receipt">
+        <div><span>Order ID</span><strong id="orderId"></strong></div>
+        <div><span>Payment ID</span><strong id="paymentId"></strong></div>
+        <div><span>Amount</span><strong>₹<span id="amount"></span></strong></div>
+        <div><span>Date</span><strong id="date"></strong></div>
+      </div>
+      <button class="primary-btn full-btn" onclick="closeModal()">Done</button>
     </div>
   </div>
 
