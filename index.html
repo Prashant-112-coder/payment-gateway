@@ -23,6 +23,7 @@
           <button class="primary-btn" onclick="buyNow()">Buy Now - ₹99</button>
           <a href="#features" class="secondary-link">See features</a>
         </div>
+        <p id="paymentStatus" class="payment-status" role="status" aria-live="polite"></p>
       </div>
       <div class="hero-card">
         <div class="product-badge">Best Seller</div>
@@ -78,9 +79,9 @@
     </section>
   </main>
 
-  <div id="successModal" class="modal-overlay">
+  <div id="successModal" class="modal-overlay" aria-hidden="true">
     <div class="modal-card">
-      <h3>✅ Payment Successful</h3>
+      <h3>Payment Successful</h3>
       <p><strong>Order ID:</strong> <span id="orderId"></span></p>
       <p><strong>Payment ID:</strong> <span id="paymentId"></span></p>
       <p><strong>Amount:</strong> ₹<span id="amount"></span></p>
