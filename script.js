@@ -1,105 +1,149 @@
+const BACKEND_URL = "https://razorpay-backend-ke6v.onrender.com";
+const PRODUCT_AMOUNT = 9900;
+const PRODUCT_CURRENCY = "INR";
+
+function setPaymentStatus(message, state = "") {
+  const status = document.getElementById("paymentStatus");
+  if (!status) return;
+  status.textContent = message;
+  status.dataset.state = state;
+}
+
+async function readApiResponse(response) {
+  const contentType = response.headers.get("content-type") || "";
+  const data = contentType.includes("application/json")
+    ? await response.json()
+    : { message: await response.text() };
+
+  if (!response.ok) {
+    throw new Error(data.message || "The payment service returned an error.");
+  }
+
+  return data;
+}
+
 async function buyNow() {
+  setPaymentStatus("Preparing secure checkout…", "loading");
+
   try {
-    // 1️⃣ CREATE ORDER
-    const res = await fetch("https://razorpay-backend-ke6v.onrender.com/create-order", {
+    const keyResponse = await fetch(`${BACKEND_URL}/api/razorpay-key`);
+    const keyData = await readApiResponse(keyResponse);
+
+    if (!keyData.success || !keyData.key) {
+      throw new Error("Payment gateway is not configured yet.");
+    }
+
+    const orderResponse = await fetch(`${BACKEND_URL}/create-order`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount: 9900, // ₹99 in paise
-        currency: "INR"
+        amount: PRODUCT_AMOUNT,
+        currency: PRODUCT_CURRENCY
       })
     });
 
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("Create order failed:", text);
-      alert("Order creation failed");
-      return;
+    const orderData = await readApiResponse(orderResponse);
+
+    if (!orderData.success || !orderData.order?.id) {
+      throw new Error("The payment order could not be created.");
     }
 
-    const data = await res.json();
-
-    if (!data.success || !data.order) {
-      console.error("Invalid order response:", data);
-      alert("Order creation failed");
-      return;
+    if (typeof Razorpay === "undefined") {
+      throw new Error("Razorpay Checkout could not be loaded. Please refresh and try again.");
     }
 
-    const order = data.order;
+    const order = orderData.order;
 
-    // 2️⃣ RAZORPAY OPTIONS
     const options = {
-      key: "rzp_test_S0eeQglGbygi4C", // ONLY KEY ID
+      key: keyData.key,
       amount: order.amount,
       currency: order.currency,
-      name: "Prashant",
-      description: "Resume Template",
+      name: "ResumeCraft",
+      description: "Modern Resume Pack",
       order_id: order.id,
 
-      handler: function (response) {
-        console.log("Payment Success:", response);
+      handler: async function (response) {
+        setPaymentStatus("Payment received. Verifying securely…", "loading");
 
-        showSuccessPopup(
-          response.razorpay_order_id,
-          response.razorpay_payment_id,
-          order.amount
-        );
+        try {
+          const verifyResponse = await fetch(`${BACKEND_URL}/verify-payment`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            })
+          });
 
-        // 🔐 VERIFY PAYMENT (BACKGROUND)
-        fetch("https://razorpay-backend-ke6v.onrender.com/verify-payment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            razorpay_order_id: response.razorpay_order_id,
-            razorpay_payment_id: response.razorpay_payment_id,
-            razorpay_signature: response.razorpay_signature
-          })
-        })
-        .then(res => res.json())
-        .then(data => console.log("Verify:", data))
-        .catch(err => console.error("Verify error:", err));
+          const verifyData = await readApiResponse(verifyResponse);
+
+          if (!verifyData.success) {
+            throw new Error(verifyData.message || "Payment verification failed.");
+          }
+
+          setPaymentStatus("Payment verified successfully.", "success");
+
+          showSuccessPopup(
+            response.razorpay_order_id,
+            response.razorpay_payment_id,
+            order.amount
+          );
+        } catch (error) {
+          console.error("Verification error:", error);
+          setPaymentStatus(
+            "Payment was received, but verification could not be completed. Please contact support with your payment ID.",
+            "error"
+          );
+        }
       },
 
       prefill: {
-        name: "Prashant",
-        email: "test@example.com",
-        contact: "9999999999"
+        name: "",
+        email: "",
+        contact: ""
       },
 
       theme: {
         color: "#2b7cff"
+      },
+
+      modal: {
+        ondismiss: function () {
+          setPaymentStatus("Payment cancelled. You can try again whenever you're ready.", "error");
+        }
       }
     };
 
-    if (typeof Razorpay === "undefined") {
-      alert("Razorpay SDK not loaded");
-      return;
-    }
-
     const rzp = new Razorpay(options);
 
-    rzp.on("payment.failed", function (err) {
-      console.error("Payment Failed:", err);
-      alert(err.error.description);
+    rzp.on("payment.failed", function (event) {
+      console.error("Payment failed:", event);
+      const message = event?.error?.description || "Payment could not be completed.";
+      setPaymentStatus(message, "error");
     });
 
+    setPaymentStatus("Secure checkout is ready.", "success");
     rzp.open();
-
-  } catch (err) {
-    console.error("Buy Now Error:", err);
-    alert("Something went wrong. Check console.");
+  } catch (error) {
+    console.error("Checkout error:", error);
+    setPaymentStatus(error.message || "Unable to start payment. Please try again.", "error");
   }
 }
 
-// ✅ SUCCESS POPUP
 function showSuccessPopup(orderId, paymentId, amountPaise) {
   document.getElementById("orderId").textContent = orderId;
   document.getElementById("paymentId").textContent = paymentId;
   document.getElementById("amount").textContent = (amountPaise / 100).toFixed(2);
   document.getElementById("date").textContent = new Date().toLocaleString();
-  document.getElementById("successModal").style.display = "flex";
+
+  const modal = document.getElementById("successModal");
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden", "false");
 }
 
 function closeModal() {
-  document.getElementById("successModal").style.display = "none";
+  const modal = document.getElementById("successModal");
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden", "true");
 }
