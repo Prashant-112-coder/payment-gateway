@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://razorpay-backend-ke6v.onrender.com";
+const BACKEND_URL = "/api/backend";
 
 function setPaymentStatus(message, state = "") {
   const status = document.getElementById("paymentStatus");
