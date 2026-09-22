@@ -78,3 +78,23 @@
 
 - Static source inspection is evidence only for code structure; it is not proof of live payment success.
 - Never commit credentials or claim a deployment/payment flow is healthy without direct evidence.
+
+
+## 2026-09-23 frontend polish iteration
+
+- Made five small, reversible frontend-only styling improvements on `main`.
+- Added clear keyboard focus indicators for interactive controls and form fields.
+- Refined desktop navigation hover/focus feedback.
+- Added a subtle hover treatment for the secondary hero action.
+- Improved the mobile header layout by hiding secondary navigation links and keeping the primary CTA compact.
+- Added `prefers-reduced-motion` handling so decorative interaction transitions can be reduced for users who request less motion.
+- No payment, pricing, API, Razorpay, or backend behavior was changed.
+- No secrets, API keys, or credentials were added.
+- Verification: changes were committed sequentially through GitHub and the stylesheet was updated successfully. Live browser/payment testing was not claimed.
+
+### Next steps
+
+1. Verify the live Razorpay origin allowlist for the production Vercel hostname.
+2. Continue small frontend polish changes without changing the payment contract.
+3. Remove committed `node_modules` and confirm ignore rules in a separate hygiene change.
+4. Add backend webhook/reconciliation support when the core checkout flow is stable.
