@@ -363,3 +363,7 @@ footer { padding: 55px 24px 24px; border-top: 1px solid var(--line); }
 
 /* UX iteration: mobile navigation */
 @media(max-width:700px){.site-header{padding:18px 16px}.nav-bar{gap:14px}.nav-links{display:none}.nav-cta{padding:11px 14px;font-size:.78rem}.brand{font-size:.92rem}}
+
+
+/* UX iteration: reduced motion */
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.nav-cta,.primary-btn,.secondary-link,.nav-links a,.catalog-card{transition:none}.nav-cta:hover:not(:disabled),.primary-btn:hover:not(:disabled),.secondary-link:hover{transform:none}}
