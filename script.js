@@ -148,6 +148,12 @@ async function buyNow(productId) {
   }
 }
 
+let previousFocusedElement = null;
+
+function getModalFocusableElements(modal) {
+  return [...modal.querySelectorAll("button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex=\"-1\"])")];
+}
+
 function showSuccessPopup(orderId,paymentId,amountPaise,downloadUrl){
   document.getElementById("orderId").textContent=orderId;
   document.getElementById("paymentId").textContent=paymentId;
@@ -155,10 +161,44 @@ function showSuccessPopup(orderId,paymentId,amountPaise,downloadUrl){
   document.getElementById("date").textContent=new Date().toLocaleString();
   const downloadButton=document.getElementById("downloadButton");
   if(downloadButton){downloadButton.disabled=!downloadUrl;downloadButton.hidden=!downloadUrl;downloadButton.onclick=()=>{if(downloadUrl)window.location.href=downloadUrl;};}
-  const modal=document.getElementById("successModal");modal.classList.add("show");modal.setAttribute("aria-hidden","false");
+  const modal=document.getElementById("successModal");
+  previousFocusedElement=document.activeElement;
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden","false");
+  getModalFocusableElements(modal)[0]?.focus();
 }
 
-function closeModal(){const modal=document.getElementById("successModal");modal.classList.remove("show");modal.setAttribute("aria-hidden","true");}
+function closeModal(){
+  const modal=document.getElementById("successModal");
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden","true");
+  if(previousFocusedElement instanceof HTMLElement){previousFocusedElement.focus();}
+  previousFocusedElement=null;
+}
+
+function handleModalKeydown(event){
+  const modal=document.getElementById("successModal");
+  if(!modal?.classList.contains("show")) return;
+  if(event.key === "Escape"){
+    event.preventDefault();
+    closeModal();
+    return;
+  }
+  if(event.key !== "Tab") return;
+  const focusable=getModalFocusableElements(modal);
+  if(!focusable.length) return;
+  const first=focusable[0];
+  const last=focusable[focusable.length-1];
+  if(event.shiftKey && document.activeElement === first){
+    event.preventDefault();
+    last.focus();
+  }else if(!event.shiftKey && document.activeElement === last){
+    event.preventDefault();
+    first.focus();
+  }
+}
+
 function scrollToProduct(){document.getElementById("products")?.scrollIntoView({behavior:"smooth",block:"start"});}
 
+document.addEventListener("keydown", handleModalKeydown);
 document.addEventListener("DOMContentLoaded", loadProducts);
