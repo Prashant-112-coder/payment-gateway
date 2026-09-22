@@ -348,3 +348,9 @@ footer { padding: 55px 24px 24px; border-top: 1px solid var(--line); }
 
 /* UX iteration: keyboard-visible focus states */
 .primary-btn:focus-visible, .nav-cta:focus-visible, .secondary-link:focus-visible, .catalog-buy:focus-visible, .secondary-modal-btn:focus-visible, .customer-fields input:focus-visible, .nav-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+
+/* UX iteration: navigation hover treatment */
+.nav-links a { position: relative; transition: color .2s ease; }
+.nav-links a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -7px; height: 1px; background: var(--accent); transition: right .2s ease; }
+.nav-links a:hover::after, .nav-links a:focus-visible::after { right: 0; }
