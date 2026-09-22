@@ -50,6 +50,30 @@
 5. Remove committed `node_modules` and add/confirm ignore rules in a separate repository-hygiene change.
 6. Add backend webhook/reconciliation support when the core checkout flow is stable.
 
+## 2026-09-22 iteration
+
+### Accessibility-focused UX change
+
+- Re-inspected `PROJECT_PLAN.md`, `PROJECT_PROGRESS.md`, `index.html`, `script.js`, and the existing stylesheet before editing.
+- Confirmed the payment flow remains routed through the same-origin Vercel `/api/backend` rewrite and the verified-success modal remains the post-verification state.
+- Added keyboard-accessible success-modal behavior: focus moves into the dialog when opened, `Tab`/`Shift+Tab` are contained within the dialog, `Escape` closes it, and focus returns to the triggering element.
+- Kept payment requests, pricing, Razorpay initialization, and verification logic unchanged.
+- No secrets, API keys, or credentials were added.
+
+### Verification
+
+- Re-read the changed `script.js` from the resulting commit through GitHub tooling and confirmed the accessibility handlers are present in the success-modal path.
+- Static verification only; no live Razorpay payment was fabricated or claimed as tested.
+- The live Razorpay origin restriction remains an external dashboard/configuration dependency and is not safely changeable from this repository.
+
+### Next steps
+
+1. Verify the live Razorpay origin allowlist for the production Vercel hostname before claiming end-to-end checkout success.
+2. Test product loading, order creation, Razorpay checkout, signature verification, and protected download end-to-end.
+3. Continue premium UI/UX improvements in small, reversible changes after the live payment path is confirmed.
+4. Remove committed `node_modules` and confirm ignore rules in a separate repository-hygiene change.
+5. Add backend webhook/reconciliation support when the core checkout flow is stable.
+
 ## Verification policy
 
 - Static source inspection is evidence only for code structure; it is not proof of live payment success.
