@@ -359,3 +359,7 @@ footer { padding: 55px 24px 24px; border-top: 1px solid var(--line); }
 /* UX iteration: secondary action hover */
 .secondary-link { transition: border-color .2s ease, background .2s ease, transform .2s ease; }
 .secondary-link:hover { border-color: rgba(139,156,255,.38); background: rgba(139,156,255,.06); transform: translateY(-1px); }
+
+
+/* UX iteration: mobile navigation */
+@media(max-width:700px){.site-header{padding:18px 16px}.nav-bar{gap:14px}.nav-links{display:none}.nav-cta{padding:11px 14px;font-size:.78rem}.brand{font-size:.92rem}}
