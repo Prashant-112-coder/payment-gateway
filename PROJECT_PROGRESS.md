@@ -71,14 +71,8 @@
 1. Verify the live Razorpay origin allowlist for the production Vercel hostname before claiming end-to-end checkout success.
 2. Test product loading, order creation, Razorpay checkout, signature verification, and protected download end-to-end.
 3. Continue premium UI/UX improvements in small, reversible changes after the live payment path is confirmed.
-4. Remove committed `node_modules` and confirm ignore rules in a separate repository-hygiene change.
+4. Remove committed `node_modules` and confirm ignore rules in a separate hygiene change.
 5. Add backend webhook/reconciliation support when the core checkout flow is stable.
-
-## Verification policy
-
-- Static source inspection is evidence only for code structure; it is not proof of live payment success.
-- Never commit credentials or claim a deployment/payment flow is healthy without direct evidence.
-
 
 ## 2026-09-23 frontend polish iteration
 
@@ -92,9 +86,30 @@
 - No secrets, API keys, or credentials were added.
 - Verification: changes were committed sequentially through GitHub and the stylesheet was updated successfully. Live browser/payment testing was not claimed.
 
+## 2026-09-23 checkout-error UX iteration
+
+- Re-inspected the frontend payment flow and the separate backend CORS/origin handling before editing.
+- Confirmed the frontend still uses the same-origin `/api/backend` proxy and the backend retains its restricted storefront-origin policy.
+- Added a focused frontend error state for Razorpay's `origin is not allowed to access the payment service` failure.
+- The error now identifies the exact `window.location.origin` that must be approved, instead of showing only a generic provider error.
+- Payment requests, pricing, Razorpay credentials, and verification logic were not changed.
+- No secrets, API keys, or credentials were added.
+
+### Verification
+
+- GitHub static inspection confirmed the new origin-specific branch is inside the checkout error path and the existing request/verification flow remains intact.
+- The separate backend source was inspected and its CORS allowlist still restricts origins to the configured frontend/local origins plus the payment-gateway Vercel deployment pattern.
+- Live Razorpay checkout cannot be truthfully claimed as tested because the provider-side origin restriction remains an external dashboard dependency.
+
 ### Next steps
 
-1. Verify the live Razorpay origin allowlist for the production Vercel hostname.
-2. Continue small frontend polish changes without changing the payment contract.
-3. Remove committed `node_modules` and confirm ignore rules in a separate hygiene change.
-4. Add backend webhook/reconciliation support when the core checkout flow is stable.
+1. Add/verify the actual production Vercel storefront origin in Razorpay's allowed checkout-origin configuration.
+2. Re-test product loading, order creation, checkout opening, signature verification, and protected download end-to-end.
+3. Continue small frontend UX improvements without changing the payment contract.
+4. Remove committed `node_modules` and confirm ignore rules in a separate hygiene change.
+5. Add backend webhook/reconciliation support when the core checkout flow is stable.
+
+## Verification policy
+
+- Static source inspection is evidence only for code structure; it is not proof of live payment success.
+- Never commit credentials or claim a deployment/payment flow is healthy without direct evidence.
