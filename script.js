@@ -143,7 +143,13 @@ async function buyNow(productId) {
     rzp.open();
   }catch(error){
     console.error("Checkout error:",{message:error.message,requestId:error.requestId});
-    setPaymentStatus(error.requestId ? `${error.message} Reference: ${error.requestId}` : error.message || "Unable to start payment. Please try again.","error");
+    const originBlocked = /origin is not allowed to access the payment service/i.test(error.message || "");
+    const message = originBlocked
+      ? `Razorpay blocked this storefront origin. Add ${window.location.origin} to the approved checkout origins, then retry.`
+      : error.requestId
+        ? `${error.message} Reference: ${error.requestId}`
+        : error.message || "Unable to start payment. Please try again.";
+    setPaymentStatus(message,"error");
     setBuyButtonsDisabled(false);
   }
 }
