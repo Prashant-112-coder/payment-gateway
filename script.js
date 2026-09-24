@@ -92,10 +92,14 @@ async function loadProducts() {
 
 async function buyNow(productId) {
   const customer = getCustomer();
-  try { validateCustomer(customer); }
-  catch (error) {
+  try {
+    validateCustomer(customer);
+  } catch (error) {
     setPaymentStatus(error.message, "error");
-    document.getElementById("customerEmail")?.focus();
+    const target = !customer.name
+      ? document.getElementById("customerName")
+      : document.getElementById("customerEmail");
+    target?.focus();
     return;
   }
 
