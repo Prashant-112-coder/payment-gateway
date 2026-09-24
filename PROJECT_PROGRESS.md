@@ -109,6 +109,19 @@
 4. Remove committed `node_modules` and confirm ignore rules in a separate hygiene change.
 5. Add backend webhook/reconciliation support when the core checkout flow is stable.
 
+## 2026-09-24 checkout form UX iteration
+
+- Re-inspected the project plan, progress log, and current frontend checkout code before editing.
+- Fixed a small form-feedback issue: when checkout validation fails because the customer name is missing, focus now returns to the name field; email-related validation still focuses the email field.
+- Kept the payment contract, pricing, API routes, Razorpay initialization, verification, and backend behavior unchanged.
+- No secrets, API keys, or credentials were added.
+
+### Verification
+
+- GitHub static inspection confirmed the new focus target is selected from the same validation branch and existing checkout flow remains intact.
+- The change was committed directly to `main` as `9f85db1` (`fix: focus correct checkout customer field`).
+- Live Razorpay checkout remains unverified because the provider-side origin restriction is still external to this repository.
+
 ## Verification policy
 
 - Static source inspection is evidence only for code structure; it is not proof of live payment success.
