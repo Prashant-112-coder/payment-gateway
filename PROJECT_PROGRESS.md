@@ -126,3 +126,11 @@
 
 - Static source inspection is evidence only for code structure; it is not proof of live payment success.
 - Never commit credentials or claim a deployment/payment flow is healthy without direct evidence.
+
+
+## 2026-09-25 iteration
+
+- Added an explicit loading-state accessibility signal to the product library.
+- Kept payment and backend behavior unchanged.
+- Verified the focused source change through GitHub.
+- Live checkout remains externally blocked by the provider-side origin restriction.
