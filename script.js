@@ -53,6 +53,7 @@ function productTags(product) {
 function renderProducts(products) {
   const grid = document.getElementById("productGrid");
   if (!grid) return;
+  grid.setAttribute("aria-busy", "false");
   grid.innerHTML = "";
   products.forEach((product, index) => {
     const tags = productTags(product);
@@ -79,14 +80,19 @@ function renderProducts(products) {
 }
 
 async function loadProducts() {
+  const grid = document.getElementById("productGrid");
+  if (grid) grid.setAttribute("aria-busy", "true");
+
   try {
     const response = await fetch(`${BACKEND_URL}/api/products`);
     const data = await readApiResponse(response);
     if (!data.success || !Array.isArray(data.products)) throw new Error("Could not load the template library.");
     renderProducts(data.products);
   } catch (error) {
-    const grid = document.getElementById("productGrid");
-    if (grid) grid.innerHTML = `<div class="catalog-empty">${error.message}</div>`;
+    if (grid) {
+      grid.setAttribute("aria-busy", "false");
+      grid.innerHTML = `<div class="catalog-empty">${error.message}</div>`;
+    }
   }
 }
 
