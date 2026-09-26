@@ -367,3 +367,7 @@ footer { padding: 55px 24px 24px; border-top: 1px solid var(--line); }
 
 /* UX iteration: reduced motion */
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.nav-cta,.primary-btn,.secondary-link,.nav-links a,.catalog-card{transition:none}.nav-cta:hover:not(:disabled),.primary-btn:hover:not(:disabled),.secondary-link:hover{transform:none}}
+
+
+/* UX iteration: clearer product focus state */
+.catalog-card:focus-within { border-color: rgba(139,156,255,.55); box-shadow: 0 30px 75px rgba(0,0,0,.32); }
