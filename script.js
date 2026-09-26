@@ -1,3 +1,6 @@
+const UPI_ID = ""; // Add your UPI ID here when you want to enable optional UPI support.
+const FREE_DOWNLOAD_BASE = `${BACKEND_URL}/free-download`;
+
 const BACKEND_URL = "/api/backend";
 
 function setPaymentStatus(message, state = "") {
@@ -70,11 +73,11 @@ function renderProducts(products) {
         <p>${product.description}</p>
         <div class="catalog-tags">${tags.map(tag => `<span>✓ ${tag}</span>`).join("")}</div>
         <div class="catalog-footer">
-          <div class="catalog-price"><small>One-time price</small><strong>₹${Math.round(product.amount / 100)}</strong></div>
-          <button class="primary-btn catalog-buy" data-product-id="${product.id}" type="button">Buy template →</button>
+          <div class="catalog-price"><small>Free download</small><strong>₹0</strong></div>
+          <button class="primary-btn catalog-buy" data-product-id="${product.id}" type="button">Download free →</button>
         </div>
       </div>`;
-    card.querySelector(".catalog-buy").addEventListener("click", () => buyNow(product.id));
+    card.querySelector(".catalog-buy").addEventListener("click", () => showPurchaseOptions(product));
     grid.appendChild(card);
   });
 }
@@ -94,6 +97,42 @@ async function loadProducts() {
       grid.innerHTML = `<div class="catalog-empty">${error.message}</div>`;
     }
   }
+}
+
+function showPurchaseOptions(product) {
+  openUpiModal(product);
+}
+
+function downloadFree(productId) {
+  window.location.href = `${FREE_DOWNLOAD_BASE}/${encodeURIComponent(productId)}`;
+}
+
+function openUpiModal(product) {
+  const modal = document.getElementById("upiModal");
+  const upiId = document.getElementById("upiId");
+  const payButton = document.getElementById("upiPayButton");
+  if (!modal) return;
+
+  if (UPI_ID) {
+    upiId.textContent = UPI_ID;
+    payButton.hidden = false;
+    payButton.onclick = () => {
+      window.location.href = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=ResumeCraft&am=49&cu=INR`;
+    };
+  } else {
+    upiId.textContent = "UPI ID coming soon";
+    payButton.hidden = true;
+  }
+
+  modal.classList.add("show");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function closeUpiModal() {
+  const modal = document.getElementById("upiModal");
+  if (!modal) return;
+  modal.classList.remove("show");
+  modal.setAttribute("aria-hidden", "true");
 }
 
 async function buyNow(productId) {
