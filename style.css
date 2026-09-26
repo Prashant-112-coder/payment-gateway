@@ -371,3 +371,8 @@ footer { padding: 55px 24px 24px; border-top: 1px solid var(--line); }
 
 /* UX iteration: clearer product focus state */
 .catalog-card:focus-within { border-color: rgba(139,156,255,.55); box-shadow: 0 30px 75px rgba(0,0,0,.32); }
+
+
+/* Optional UPI support / free-download UX */
+.upi-box{display:grid;gap:7px;margin:22px 0;padding:18px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}
+.upi-box span{color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em}.upi-box strong{font:800 1rem Manrope}.upi-box small{color:var(--muted);font-size:.75rem}
