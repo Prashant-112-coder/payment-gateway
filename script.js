@@ -1,7 +1,6 @@
+const BACKEND_URL = "/api/backend";
 const UPI_ID = ""; // Add your UPI ID here when you want to enable optional UPI support.
 const FREE_DOWNLOAD_BASE = `${BACKEND_URL}/free-download`;
-
-const BACKEND_URL = "/api/backend";
 
 function setPaymentStatus(message, state = "") {
   const status = document.getElementById("paymentStatus");
@@ -74,10 +73,11 @@ function renderProducts(products) {
         <div class="catalog-tags">${tags.map(tag => `<span>✓ ${tag}</span>`).join("")}</div>
         <div class="catalog-footer">
           <div class="catalog-price"><small>Free download</small><strong>₹0</strong></div>
-          <button class="primary-btn catalog-buy" data-product-id="${product.id}" type="button">Download free →</button>
+          <div class="catalog-actions"><button class="primary-btn catalog-buy" data-product-id="${product.id}" type="button">Download free →</button><button class="secondary-modal-btn catalog-support" type="button">Support with UPI</button></div>
         </div>
       </div>`;
-    card.querySelector(".catalog-buy").addEventListener("click", () => showPurchaseOptions(product));
+    card.querySelector(".catalog-buy").addEventListener("click", () => downloadFree(product.id));
+    card.querySelector(".catalog-support").addEventListener("click", () => showPurchaseOptions(product));
     grid.appendChild(card);
   });
 }
