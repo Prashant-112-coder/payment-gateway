@@ -376,3 +376,5 @@ footer { padding: 55px 24px 24px; border-top: 1px solid var(--line); }
 /* Optional UPI support / free-download UX */
 .upi-box{display:grid;gap:7px;margin:22px 0;padding:18px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.025)}
 .upi-box span{color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em}.upi-box strong{font:800 1rem Manrope}.upi-box small{color:var(--muted);font-size:.75rem}
+
+.catalog-actions{display:grid;gap:8px;min-width:150px}.catalog-actions .secondary-modal-btn{padding:10px 13px;font-size:.72rem}.catalog-support{width:100%}
