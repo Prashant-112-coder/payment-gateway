@@ -40,7 +40,7 @@
         <div class="trust-row">
           <span>✓ ATS-friendly structure</span>
           <span>✓ Editable layout</span>
-          <span>✓ Secure Razorpay checkout</span>
+          <span>✓ Optional UPI support</span>
         </div>
         <p id="paymentStatus" class="payment-status" role="status" aria-live="polite"></p>
       </div>
@@ -93,15 +93,15 @@
       <div class="section-heading">
         <div>
           <span class="eyebrow">THE RESUMECRAFT LIBRARY</span>
-          <h2>Pick your style.<br /><span>Pay ₹49. Download instantly.</span></h2>
+          <h2>Pick your style.<br /><span>Download free. Support if you want.</span></h2>
         </div>
         <p>Seven original, editable resume templates built around clean typography, standard sections and ATS-friendly structure. Choose one for your target role and reuse it across applications.</p>
       </div>
 
       <div class="catalog-note">
-        <span>⚡ Launch price: <strong>₹49 each</strong></span>
-        <span>✓ Secure Razorpay checkout</span>
-        <span>✓ Protected download</span>
+        <span>✓ Free download</span>
+        <span>💜 Optional UPI support</span>
+        <span>✓ No payment required</span>
       </div>
 
       <div class="customer-fields catalog-customer-fields">
@@ -176,6 +176,23 @@
     </div>
   </div>
 
+
+  <div id="upiModal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="upiTitle">
+    <div class="modal-card">
+      <span class="eyebrow">OPTIONAL SUPPORT</span>
+      <h3 id="upiTitle">Support ResumeCraft with UPI</h3>
+      <p>You can download every template for free. If you found it useful, you can optionally support the project with a UPI payment.</p>
+      <div class="upi-box">
+        <span>UPI ID</span>
+        <strong id="upiId">Add your UPI ID</strong>
+        <small>Send ₹49 (optional) using your UPI app.</small>
+      </div>
+      <div class="modal-actions">
+        <button id="upiPayButton" class="primary-btn full-btn" type="button">Open UPI app</button>
+        <button class="secondary-modal-btn" type="button" onclick="closeUpiModal()">Maybe later</button>
+      </div>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
